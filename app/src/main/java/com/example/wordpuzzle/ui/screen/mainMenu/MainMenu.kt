@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateOffset
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,14 +26,13 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.wordpuzzle.R
+import ir.kaaveh.sdpcompose.sdp
 import kotlinx.coroutines.delay
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun MainMenu(){
+fun MainMenu(navigateSelectPuzzleScreen: () -> Unit, navigateSettingsScreen: () -> Unit){
     Column(modifier = Modifier
         .fillMaxSize()
         .paint(
@@ -43,24 +43,24 @@ fun MainMenu(){
         TransitionAnimation(Modifier.align(Alignment.CenterHorizontally))
 
         //button
-        Column(Modifier
-            .align(Alignment.CenterHorizontally)){
+        Column(Modifier.align(Alignment.CenterHorizontally)){
             Image(
                 painter = painterResource(id = R.drawable.play),
-                modifier = Modifier.padding(bottom = 10.dp),
+                modifier = Modifier.padding(bottom = 10.sdp).clickable { navigateSelectPuzzleScreen() },
                 contentDescription = null)
             Image(
                 painter = painterResource(id = R.drawable.exit),
-                modifier = Modifier.padding(top = 10.dp),
+                modifier = Modifier.padding(top = 10.sdp),
                 contentDescription = null)
         }
 
         Image(
             painter = painterResource(id = R.drawable.settings_2),
             modifier = Modifier
-                .size(80.dp)
+                .size(80.sdp)
                 .align(Alignment.End)
-                .padding(end = 15.dp),
+                .padding(end = 15.sdp)
+                .clickable { navigateSettingsScreen() },
             contentDescription = null)
     }
 }
@@ -82,9 +82,7 @@ fun TransitionAnimation(modifier: Modifier){
         transitionSpec = {
             if(this.targetState){
                tween(1000)
-            } else {
-                tween(1000)
-            }
+            } else tween(1000)
         }, label = "layerIconOffset"){ animated ->
         if(animated){
             Offset(-50f, 20f)
@@ -96,7 +94,7 @@ fun TransitionAnimation(modifier: Modifier){
     val layerIconSize by transition.animateDp(transitionSpec = {
         tween(1000)
     }, ""){animated ->
-        if(animated) 80.dp else 80.dp
+        if(animated) 80.sdp else 80.sdp
     }
 
     Box(modifier = modifier){
