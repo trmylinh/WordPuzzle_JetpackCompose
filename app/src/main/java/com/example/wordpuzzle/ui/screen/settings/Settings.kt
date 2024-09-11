@@ -56,25 +56,45 @@ fun Settings() {
             painter = painterResource(id = R.drawable.settings_title),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(end = 15.sdp),
+                .padding(top = 20.sdp),
             contentDescription = null
         )
 
-        CustomSwitchBtn(
+        Row(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
-            height = 50.sdp,
-            width = 90.sdp,
-            circleButtonPadding = 4.sdp,
-            outerBackgroundOnResource = R.drawable.soundbtn2,
-            outerBackgroundOffResource = R.drawable.soundbtn1,
-            circleBackgroundOnResource = R.drawable.soundbtn_music,
-            circleBackgroundOffResource = R.drawable.soundbtn_music,
-            stateOn = 1,
-            stateOff = 0,
-            initialValue = 0,
-            onCheckedChanged = {}
-        )
+        ) {
+            CustomSwitchBtn(
+                modifier = Modifier
+                    .padding(end = 15.sdp),
+                height = 50.sdp,
+                width = 90.sdp,
+                circleButtonPadding = 4.sdp,
+                outerBackgroundOnResource = R.drawable.soundbtn2,
+                outerBackgroundOffResource = R.drawable.soundbtn1,
+                circleBackgroundOnResource = R.drawable.soundfxbtn,
+                circleBackgroundOffResource = R.drawable.soundfxbtn,
+                stateOn = 1,
+                stateOff = 0,
+                initialValue = 0,
+                onCheckedChanged = {}
+            )
+            CustomSwitchBtn(
+                modifier = Modifier
+                    .padding(start = 15.sdp),
+                height = 50.sdp,
+                width = 90.sdp,
+                circleButtonPadding = 4.sdp,
+                outerBackgroundOnResource = R.drawable.soundbtn2,
+                outerBackgroundOffResource = R.drawable.soundbtn1,
+                circleBackgroundOnResource = R.drawable.soundbtn_music,
+                circleBackgroundOffResource = R.drawable.soundbtn_music,
+                stateOn = 1,
+                stateOff = 0,
+                initialValue = 0,
+                onCheckedChanged = {}
+            )
+        }
 
         SettingOptionBtn(
             modifier = Modifier
