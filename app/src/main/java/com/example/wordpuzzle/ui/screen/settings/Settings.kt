@@ -1,5 +1,6 @@
 package com.example.wordpuzzle.ui.screen.settings
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,7 +79,8 @@ fun Settings() {
                 stateOn = 1,
                 stateOff = 0,
                 initialValue = 0,
-                onCheckedChanged = {}
+                onCheckedChanged = {},
+                type = "sound"
             )
             CustomSwitchBtn(
                 modifier = Modifier
@@ -92,7 +95,8 @@ fun Settings() {
                 stateOn = 1,
                 stateOff = 0,
                 initialValue = 0,
-                onCheckedChanged = {}
+                onCheckedChanged = {},
+                type = "music"
             )
         }
 
@@ -117,16 +121,26 @@ fun CustomSwitchBtn(
     stateOn: Int,
     stateOff: Int,
     initialValue: Int,
-    onCheckedChanged: (checked: Boolean) -> Unit
+    onCheckedChanged: (checked: Boolean) -> Unit,
+    type: String
 ) {
     Column(modifier = modifier) {
+        val mContext = LocalContext.current
+        val mMediaPlayer = MediaPlayer.create(mContext,
+            if(type == "music")
+                R.raw.positive_soft_background_intro_music
+            else R.raw.funny_game_hit_sound_effect
+        )
+
         val swipeableState = rememberSwipeableState(
             initialValue = initialValue,
             confirmStateChange = { newState ->
                 if (newState == stateOff) {
                     onCheckedChanged(false)
+                    mMediaPlayer.pause()
                 } else {
                     onCheckedChanged(true)
+                    mMediaPlayer.start()
                 }
                 true
             }
